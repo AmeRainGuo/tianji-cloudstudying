@@ -12,12 +12,16 @@ import org.springframework.context.annotation.Primary;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.builders.RequestParameterBuilder;
+import springfox.documentation.schema.ScalarType;
 import springfox.documentation.service.Contact;
+import springfox.documentation.service.ParameterType;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
+import java.util.Collections;
 
 @Configuration
 @ConditionalOnProperty(prefix = "tj.swagger", name = "enable",havingValue = "true")
@@ -48,7 +52,15 @@ public class Knife4jConfiguration {
                 //这里指定Controller扫描包路径
                 .apis(RequestHandlerSelectors.basePackage(swaggerConfigProperties.getPackagePath()))
                 .paths(PathSelectors.any())
-                .build();
+                .build()
+                .globalRequestParameters(Collections.singletonList(
+                        new RequestParameterBuilder()
+                                .name("user-info")
+                                .description("用户ID")
+                                .required(false) // 调试时设为false，不填也不会报错
+                                .in(ParameterType.HEADER)
+                                .query(q -> q.model(m -> m.scalarModel(ScalarType.STRING)))
+                                .build()));
 
     }
     @Bean
