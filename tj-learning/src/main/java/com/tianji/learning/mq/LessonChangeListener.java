@@ -25,11 +25,11 @@ public class LessonChangeListener {
     private final ILearningLessonService lessonService;
 
     @RabbitListener(bindings=@QueueBinding(
-            value = @Queue(name = "learning.lesson.pay.queue",durable="ture"),
+            value = @Queue(name = "learning.lesson.pay.queue",durable="true"),
             exchange = @Exchange(name=MqConstants.Exchange.ORDER_EXCHANGE,type= ExchangeTypes.TOPIC),
             key = MqConstants.Key.ORDER_PAY_KEY
     ))
-    public void listenLessonPay(OrderBasicDTO  order){
+    public void listenLessonPay(OrderBasicDTO order){
         // 1.健壮性处理
         if(order == null || order.getUserId() == null|| CollUtils.isEmpty(order.getCourseIds())){
             //数据异常
@@ -39,6 +39,22 @@ public class LessonChangeListener {
         // 2.添加课程
         log.debug("添加课程，用户id：{}，订单id：{}，课程id集合：{}",order.getUserId(),order.getOrderId(),order.getCourseIds());
         lessonService.addUserLessons(order.getUserId(), order.getCourseIds());
-        // 3.更新课程表
+    }
+
+    @RabbitListener(bindings=@QueueBinding(
+            value = @Queue(name = "learning.lesson.refund.queue",durable="true"),
+            exchange = @Exchange(name = MqConstants.Exchange.ORDER_EXCHANGE,type= ExchangeTypes.TOPIC),
+            key = MqConstants.Key.ORDER_REFUND_KEY
+    ))
+    public void listenLessonRefund(OrderBasicDTO order) {
+        // 1.健壮性处理
+        if(order == null || order.getUserId() == null|| CollUtils.isEmpty(order.getCourseIds())){
+            //数据异常
+            log.error("接收到的消息异常，订单数据为空");
+            return;
+        }
+        // 2.删除课程
+        log.debug("删除课程，用户id：{}，订单id：{}，课程id集合：{}",order.getUserId(),order.getOrderId(),order.getCourseIds());
+        lessonService.removeCourseByRefund(order);
     }
 }
