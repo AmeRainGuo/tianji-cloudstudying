@@ -4,16 +4,13 @@ package com.tianji.learning.controller;
 import com.tianji.common.domain.dto.PageDTO;
 import com.tianji.common.domain.query.PageQuery;
 import com.tianji.learning.domain.po.LearningLesson;
+import com.tianji.learning.domain.vo.LearningLessonStatusVO;
 import com.tianji.learning.domain.vo.LearningLessonVO;
 import com.tianji.learning.service.ILearningLessonService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -37,5 +34,37 @@ public class LearningLessonController {
 
         PageDTO<LearningLessonVO> result = learningLessonService.queryMyLessons(query);
         return result;
+    }
+
+    @GetMapping("/now")
+    @ApiOperation("查询我正在学习的课程")
+    public LearningLessonVO queryMyCurrentLesson() {
+        return learningLessonService.queryMyCurrentLesson();
+    }
+
+    @DeleteMapping("/now/{courseId}")
+    @ApiOperation("用户删除学习课程")
+    public void deleteMyLesson(@PathVariable Long courseId) {
+        learningLessonService.removeCourseByCourseId(courseId);
+    }
+
+
+    @GetMapping("/{courseId}/valid")
+    @ApiOperation("校验当前用户是否可以学习当前课程")
+    public Long isLessonValid(@PathVariable Long courseId) {
+        // 校验当前用户是否可以学习这门课程的逻辑
+        return learningLessonService.isLessonValid(courseId);
+    }
+
+    @GetMapping("/lessons/{courseId}")
+    @ApiOperation("查询用户课表中指定课程状态")
+    public LearningLessonStatusVO queryLearningLessonByCourseId(@PathVariable Long courseId) {
+        return learningLessonService.queryLearningLessonByCourseId(courseId);
+    }
+
+    @GetMapping("/{courseId}/count")
+    @ApiOperation("查询课程的学习人数")
+    public Integer queryLearnedCount(@PathVariable Long courseId) {
+        return learningLessonService.queryLearnedCount(courseId);
     }
 }

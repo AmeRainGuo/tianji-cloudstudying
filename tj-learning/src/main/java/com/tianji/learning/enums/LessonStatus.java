@@ -12,7 +12,7 @@ public enum LessonStatus implements BaseEnum {
     LEARNING(1, "学习中"),
     FINISHED(2, "已学完"),
     EXPIRED(3, "已过期"),
-    ;
+    INVALID(4, "已失效");
     @JsonValue
     @EnumValue
     int value;
