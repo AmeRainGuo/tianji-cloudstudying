@@ -35,7 +35,6 @@ public class LearningLessonStatusVO {
     private PlanStatus planStatus;
 
 
-
     @ApiModelProperty("课程价格")
     private Integer price;
 

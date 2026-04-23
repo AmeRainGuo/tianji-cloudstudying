@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -24,6 +25,7 @@ import java.util.concurrent.DelayQueue;
 
 @Slf4j
 @RequiredArgsConstructor
+@Component
 public class LearningRecordDelayTaskHandler {
 
     private final StringRedisTemplate redisTemplate;

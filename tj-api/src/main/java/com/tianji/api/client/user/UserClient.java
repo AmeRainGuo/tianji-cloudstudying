@@ -46,7 +46,6 @@ public interface UserClient {
     @GetMapping("/users/list")
     List<UserDTO> queryUserByIds(@RequestParam("ids") Iterable<Long> ids);
 
-
     /**
      * 根据id查询单个学生信息
      * @param id 用户id
