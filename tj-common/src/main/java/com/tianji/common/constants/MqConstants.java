@@ -51,6 +51,8 @@ public interface MqConstants {
         String WRITE_NOTE = "note.new";
         /* 笔记被采集 */
         String NOTE_GATHERED = "note.gathered";
+        /*写课程评价*/
+        String WRITE_COMMENT = "comment.new";
 
         /*点赞的RoutingKey*/
         String LIKED_TIMES_KEY_TEMPLATE = "{}.times.changed";
