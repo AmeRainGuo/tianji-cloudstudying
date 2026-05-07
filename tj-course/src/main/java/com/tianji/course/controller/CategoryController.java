@@ -93,4 +93,13 @@ public class CategoryController {
     public List<CategoryVO> allOfOneLevel() {
         return categoryService.allOfOneLevel();
     }
+
+    @GetMapping("{ids}")
+    @ApiOperation("批量获取课程分类信息")
+    @ApiImplicitParams(
+            @ApiImplicitParam(name = "ids", value = "分类id列表")
+    )
+    public List<CategoryInfoVO> get(@PathVariable("ids") List<Long> ids) {
+        return categoryService.getCategoryInfoVoByIds(ids);
+    }
 }
