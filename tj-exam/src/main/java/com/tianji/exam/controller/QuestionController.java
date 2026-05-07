@@ -98,4 +98,6 @@ public class QuestionController {
     public Boolean checkNameValid(@RequestParam("name") String name){
         return questionService.checkNameValid(name);
     }
+
+
 }

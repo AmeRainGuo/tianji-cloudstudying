@@ -105,4 +105,6 @@ public interface ICategoryService extends IService<Category> {
      * @return 一二三级课程分类id列表
      */
     List<Long> checkCategory(Long thirdCateId);
+
+    List<CategoryInfoVO> getCategoryInfoVoByIds(List<Long> ids);
 }

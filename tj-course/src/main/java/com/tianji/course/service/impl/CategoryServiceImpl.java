@@ -644,4 +644,15 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
             }
         }
     }
+
+    @Override
+    public List<CategoryInfoVO> getCategoryInfoVoByIds(List<Long> ids) {
+        List<Category> categoryInfoVOS = lambdaQuery().in(Category::getId, ids).list();
+        return CollUtils.isEmpty(categoryInfoVOS) ? CollUtils.emptyList() : categoryInfoVOS.stream().map(
+                category ->{
+                    CategoryInfoVO categoryInfoVO = BeanUtils.copyProperties(category, CategoryInfoVO.class);
+                    return categoryInfoVO;
+                }
+        ).collect(Collectors.toList());
+    }
 }

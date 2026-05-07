@@ -9,6 +9,9 @@ spring:
     active: dev
   application:
     name: exam-service
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/tj_exam
   cloud:
     nacos:
       config:

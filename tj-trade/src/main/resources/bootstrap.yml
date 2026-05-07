@@ -3,6 +3,8 @@ server:
   tomcat:
     uri-encoding: UTF-8   #服务编码
 spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
   profiles:
     active: dev
   application:
@@ -19,6 +21,8 @@ spring:
           - dataId: shared-feign.yaml # 共享feign配置
           - dataId: shared-mq.yaml # 共享mq配置
           - dataId: shared-xxljob.yaml # 共享mq配置
+          - dataId: shared-seata.yaml # 共享seata配置
+
 tj:
   swagger:
     enable: true

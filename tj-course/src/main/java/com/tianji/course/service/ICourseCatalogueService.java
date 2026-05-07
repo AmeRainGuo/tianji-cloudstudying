@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.tianji.api.dto.course.CatalogueDTO;
 import com.tianji.api.dto.course.MediaQuoteDTO;
 import com.tianji.api.dto.course.SectionInfoDTO;
+import com.tianji.course.domain.po.CourseBase;
 import com.tianji.course.domain.po.CourseCatalogue;
+import com.tianji.course.domain.vo.CataNoteVO;
 import com.tianji.course.domain.vo.CataSimpleInfoVO;
 import com.tianji.course.domain.vo.CataVO;
 
@@ -57,4 +59,8 @@ public interface ICourseCatalogueService extends IService<CourseCatalogue> {
     CataSimpleInfoVO querySectionInfoById(Long id);
 
     List<CataVO> queryCourseCataloguesVO(Long courseId, Boolean withPractice);
+
+    List<CataNoteVO> listCourseCataloguesNoteVO(List<Long> courseIds);
+
+    List<CourseBase> batchQuerySectionInfoByIds(List<Long> ids);
 }

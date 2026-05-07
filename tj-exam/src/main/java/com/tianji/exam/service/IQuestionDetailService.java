@@ -3,6 +3,8 @@ package com.tianji.exam.service;
 import com.tianji.exam.domain.po.QuestionDetail;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  * 题目 服务类

@@ -16,6 +16,13 @@
         <module>tj-pay-domain</module>
         <module>tj-pay-api</module>
     </modules>
+    <dependencies>
+        <!-- OpenFeign 微服务调用依赖 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+    </dependencies>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>

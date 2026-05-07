@@ -6,7 +6,9 @@ import com.tianji.common.domain.dto.PageDTO;
 import com.tianji.course.domain.dto.CoursePageQuery;
 import com.tianji.course.domain.dto.CourseSimpleInfoListDTO;
 import com.tianji.course.domain.po.Course;
+import com.tianji.course.domain.po.CourseBase;
 import com.tianji.course.domain.vo.CourseAndSectionVO;
+import com.tianji.course.domain.vo.CourseNoteVO;
 import com.tianji.course.domain.vo.CoursePageVO;
 import com.tianji.course.domain.vo.NameExistVO;
 
@@ -121,4 +123,8 @@ public interface ICourseService extends IService<Course> {
     List<Long> queryCourseIdByName(String name);
 
     CourseAndSectionVO queryCourseAndCatalogById(Long courseId);
+
+    List<CourseNoteVO> listCourseNoteByIds(List<Long> ids);
+
+
 }
