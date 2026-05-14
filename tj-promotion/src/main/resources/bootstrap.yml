@@ -50,3 +50,9 @@ tj:
     listener:
       retry:
         stateless: false # 状态无重试
+  retry:
+    stateless: false # 状态无重试
+  promotion:
+    aes:
+      key: 12345678901234567890123456
+      iv: 1234567890123456  # 补上这一行！和代码里的变量名完全一致

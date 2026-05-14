@@ -3,12 +3,16 @@ package com.tianji.promotion.strategy.discount;
 import com.tianji.common.utils.NumberUtils;
 import com.tianji.common.utils.StringUtils;
 import com.tianji.promotion.domain.po.Coupon;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+
 
 @RequiredArgsConstructor
 public class PriceDiscount implements Discount{
 
     private static final String RULE_TEMPLATE = "满{}减{}";
+
 
 
     @Override

@@ -1,21 +1,25 @@
 package com.tianji.promotion.domain.po;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.tianji.promotion.enums.CouponStatus;
+import com.tianji.promotion.enums.DiscountType;
+import com.tianji.promotion.enums.ObtainType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
  * 优惠券的规则信息
  * </p>
  *
- * @author Amerain
- * @since 2026-05-13
+ * @author 虎哥
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -28,12 +32,13 @@ public class Coupon implements Serializable {
     /**
      * 优惠券id
      */
-    @TableId(value = "id", type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
 
     /**
      * 优惠券名称，可以和活动名称保持一致
      */
+    @TableField("`name`")
     private String name;
 
     /**
@@ -44,11 +49,12 @@ public class Coupon implements Serializable {
     /**
      * 折扣类型，1：满减，2：每满减，3：折扣，4：无门槛
      */
-    private Integer discountType;
+    private DiscountType discountType;
 
     /**
      * 是否限定作用范围，false：不限定，true：限定。默认false
      */
+    @TableField("`specific`")
     private Boolean specific;
 
     /**
@@ -69,7 +75,7 @@ public class Coupon implements Serializable {
     /**
      * 获取方式：1：手动领取，2：兑换码
      */
-    private Integer obtainWay;
+    private ObtainType obtainWay;
 
     /**
      * 开始发放时间
@@ -99,7 +105,7 @@ public class Coupon implements Serializable {
     /**
      * 优惠券配置状态，1：待发放，2：未开始   3：进行中，4：已结束，5：暂停
      */
-    private Integer status;
+    private CouponStatus status;
 
     /**
      * 总数量，不超过5000

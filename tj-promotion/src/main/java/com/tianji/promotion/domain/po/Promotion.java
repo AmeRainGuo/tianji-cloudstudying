@@ -1,21 +1,20 @@
 package com.tianji.promotion.domain.po;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.IdType;
-import java.time.LocalDateTime;
-import com.baomidou.mybatisplus.annotation.TableId;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
  * 促销活动，形式多种多样，例如：优惠券
  * </p>
  *
- * @author Amerain
- * @since 2026-05-13
+ * @author 虎哥
+ * @since 2022-09-06
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -66,14 +65,17 @@ public class Promotion implements Serializable {
      */
     private LocalDateTime updateTime;
 
+
     /**
      * 创建人
      */
+    @TableField(fill = FieldFill.INSERT)
     private Long creater;
 
     /**
      * 更新人
      */
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Long updater;
 
 

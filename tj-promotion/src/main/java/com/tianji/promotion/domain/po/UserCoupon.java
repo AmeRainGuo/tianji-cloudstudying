@@ -1,21 +1,22 @@
 package com.tianji.promotion.domain.po;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.tianji.promotion.enums.UserCouponStatus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
  * 用户领取优惠券的记录，是真正使用的优惠券信息
  * </p>
  *
- * @author Amerain
- * @since 2026-05-13
+ * @author 虎哥
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -28,7 +29,7 @@ public class UserCoupon implements Serializable {
     /**
      * 用户券id
      */
-    @TableId(value = "id", type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
 
     /**
@@ -59,7 +60,7 @@ public class UserCoupon implements Serializable {
     /**
      * 优惠券状态，1：未使用，2：已使用，3：已失效
      */
-    private Integer status;
+    private UserCouponStatus status;
 
     /**
      * 创建时间
