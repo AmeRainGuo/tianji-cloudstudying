@@ -5,6 +5,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.core.env.Environment;
 
 import java.net.InetAddress;
@@ -13,6 +14,7 @@ import java.net.UnknownHostException;
 @MapperScan("com.tianji.pay.mapper")
 @SpringBootApplication
 @Slf4j
+@EnableFeignClients
 public class PayApplication {
     public static void main(String[] args) throws UnknownHostException {
         SpringApplication app = new SpringApplicationBuilder(PayApplication.class).build(args);

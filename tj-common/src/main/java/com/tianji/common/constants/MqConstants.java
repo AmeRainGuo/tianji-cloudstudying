@@ -19,6 +19,7 @@ public interface MqConstants {
 
         /*支付有关的交换机*/
         String PAY_EXCHANGE = "pay.topic";
+
         /*交易服务延迟任务交换机*/
         String TRADE_DELAY_EXCHANGE = "trade.delay.topic";
 
@@ -27,6 +28,9 @@ public interface MqConstants {
 
         /*优惠促销有关的交换机*/
         String PROMOTION_EXCHANGE = "promotion.topic";
+
+        /*考试题目有关的交换机*/
+        String EXAM_EXCHANGE = "exam.topic";
     }
     interface Queue {
         String ERROR_QUEUE_TEMPLATE = "error.{}.queue";
@@ -79,5 +83,8 @@ public interface MqConstants {
 
         /*领取优惠促销有关的RoutingKey*/
         String COUPON_RECEIVE = "coupon.receive";
+
+        /*更新题目回答次数与正确次数有关的RoutingKey*/
+        String UPDATE_QUESTION_KEY = "updayte.question.key";
     }
 }

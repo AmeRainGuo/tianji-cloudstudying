@@ -32,6 +32,7 @@ public class QuestionDetailVO {
 
     @ApiModelProperty("3级课程分类id")
     private Long cateId3;
+
     @ApiModelProperty("课程三级分类的名称集合")
     private List<String> categories;
 

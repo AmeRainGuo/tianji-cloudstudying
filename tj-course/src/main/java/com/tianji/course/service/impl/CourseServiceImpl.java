@@ -25,11 +25,9 @@ import com.tianji.course.constants.CourseStatus;
 import com.tianji.course.constants.RedisContants;
 import com.tianji.course.domain.dto.CoursePageQuery;
 import com.tianji.course.domain.dto.CourseSimpleInfoListDTO;
-import com.tianji.course.domain.po.Category;
-import com.tianji.course.domain.po.Category3PO;
-import com.tianji.course.domain.po.Course;
-import com.tianji.course.domain.po.CourseTeacher;
+import com.tianji.course.domain.po.*;
 import com.tianji.course.domain.vo.*;
+import com.tianji.course.domain.vo.CourseNoteVO;
 import com.tianji.course.mapper.CourseDraftMapper;
 import com.tianji.course.mapper.CourseMapper;
 import com.tianji.course.mapper.CourseTeacherMapper;
@@ -556,4 +554,22 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         }
         return cateIdAndNumMap;
     }
+
+    @Override
+    public List<CourseNoteVO> listCourseNoteByIds(List<Long> ids) {
+
+        if (CollUtils.isEmpty(ids)) {
+            return CollUtils.emptyList();
+        }
+        //1.查询课程信息
+        List<Course> courses = this.lambdaQuery()
+                .in(Course::getId, ids)
+                .list();
+        return courses
+                .stream()
+                .map(course -> new CourseNoteVO(course.getId(), course.getName()))
+                .collect(Collectors.toList());
+    }
+
+
 }

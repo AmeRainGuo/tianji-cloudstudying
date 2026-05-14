@@ -1,5 +1,8 @@
 package com.tianji.course.controller;
 
+import com.tianji.api.dto.course.CatalogueDTO;
+import com.tianji.course.domain.po.CourseBase;
+import com.tianji.course.domain.vo.CataNoteVO;
 import com.tianji.course.domain.vo.CataSimpleInfoVO;
 import com.tianji.course.service.ICourseCatalogueService;
 import io.swagger.annotations.Api;
@@ -25,7 +28,7 @@ public class CatalogueController {
     @Autowired
     private ICourseCatalogueService courseCatalogueService;
 
-    @GetMapping("batchQuery")
+    @GetMapping("/batchQuery")
     @ApiOperation("根据章节目录批量查询基础信息")
     public List<CataSimpleInfoVO> batchQuery(@RequestParam("ids") List<Long> ids) {
         return courseCatalogueService.getManyCataSimpleInfo(ids);
@@ -35,5 +38,17 @@ public class CatalogueController {
     @ApiOperation("获取小节信息")
     public CataSimpleInfoVO querySectionInfoById(@PathVariable("id") Long id) {
         return courseCatalogueService.querySectionInfoById(id);
+    }
+
+    @GetMapping("querySectionInfoByIds/{courseIds}")
+    @ApiOperation("批量获取小节信息")
+    public List<CataNoteVO> querySectionInfoByIds(@PathVariable("courseIds") List<Long> courseIds) {
+        return courseCatalogueService.listCourseCataloguesNoteVO(courseIds);
+    }
+
+    @ApiOperation("根据小节id批量查询课程与小节详情")
+    @GetMapping("/batch/query/section")
+    public List<CourseBase> batchQuerySection(@RequestParam("ids") List<Long> ids) {
+        return courseCatalogueService.batchQuerySectionInfoByIds(ids);
     }
 }

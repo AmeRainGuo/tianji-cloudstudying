@@ -1,6 +1,7 @@
 package com.tianji.api.client.course;
 
 import com.tianji.api.dto.course.*;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -65,4 +66,8 @@ public interface CourseClient {
             @RequestParam(value = "withCatalogue", required = false) boolean withCatalogue,
             @RequestParam(value = "withTeachers", required = false) boolean withTeachers
     );
+
+    @ApiOperation("批量查询课程详情")
+    @GetMapping("/courses/batch/query")
+    List<CourseNoteVO> batchQueryCourse(@RequestParam("ids") List<Long> ids);
 }

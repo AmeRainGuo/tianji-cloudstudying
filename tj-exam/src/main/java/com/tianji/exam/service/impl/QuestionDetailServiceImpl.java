@@ -6,6 +6,8 @@ import com.tianji.exam.service.IQuestionDetailService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
  * 题目 服务实现类

@@ -12,10 +12,14 @@ import com.tianji.common.exceptions.BizIllegalException;
 import com.tianji.common.utils.*;
 import com.tianji.course.constants.CourseConstants;
 import com.tianji.course.constants.CourseErrorInfo;
+import com.tianji.course.domain.po.Course;
+import com.tianji.course.domain.po.CourseBase;
 import com.tianji.course.domain.po.CourseCatalogue;
+import com.tianji.course.domain.vo.CataNoteVO;
 import com.tianji.course.domain.vo.CataSimpleInfoVO;
 import com.tianji.course.domain.vo.CataVO;
 import com.tianji.course.mapper.CourseCatalogueMapper;
+import com.tianji.course.mapper.CourseMapper;
 import com.tianji.course.properties.CourseProperties;
 import com.tianji.course.service.ICourseCatalogueService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +44,9 @@ public class CourseCatalogueServiceImpl extends ServiceImpl<CourseCatalogueMappe
 
     @Autowired
     private ExamClient examClient;
+
+    @Autowired
+    private CourseMapper courseMapper;
 
     @Override
     public List<CatalogueDTO> queryCourseCatalogues(Long courseId, Boolean withPractice) {
@@ -206,6 +213,24 @@ public class CourseCatalogueServiceImpl extends ServiceImpl<CourseCatalogueMappe
     }
 
     @Override
+    public List<CataNoteVO> listCourseCataloguesNoteVO(List<Long> courseIds) {
+        if (CollUtils.isEmpty(courseIds)){
+            return CollUtils.emptyList();
+        }
+        // 1.查询数据
+        List<CourseCatalogue> list = this.lambdaQuery()
+                .in(CourseCatalogue::getCourseId, courseIds)
+                .eq(CourseCatalogue::getType, CourseConstants.CataType.CHAPTER)
+                .list();
+        if (CollUtils.isEmpty(list)) {
+            return CollUtils.emptyList();
+        }
+        // 2.数据转化
+        return BeanUtils.copyList(list, CataNoteVO.class);
+    }
+
+
+    @Override
     public List<CataVO> queryCourseCataloguesVO(Long courseId, Boolean withPractice) {
         //1.课程目录查询条件
         LambdaQueryWrapper<CourseCatalogue> queryWrapper =
@@ -255,6 +280,9 @@ public class CourseCatalogueServiceImpl extends ServiceImpl<CourseCatalogueMappe
                         }, new CourseCatalogDataWrapper2());
 
         return cataVOS;
+
+
+
     }
 
     //课程目录树形转化模型
@@ -285,6 +313,8 @@ public class CourseCatalogueServiceImpl extends ServiceImpl<CourseCatalogueMappe
         public void setChild(CatalogueDTO parent, List<CatalogueDTO> child) {
             parent.setSections(child);
         }
+
+
     }
 
     //课程目录树形转化模型
@@ -315,5 +345,48 @@ public class CourseCatalogueServiceImpl extends ServiceImpl<CourseCatalogueMappe
         public void setChild(CataVO parent, List<CataVO> child) {
             parent.setSections(child);
         }
+    }
+
+    @Override
+    public List<CourseBase> batchQuerySectionInfoByIds(List<Long> ids) {
+        if (CollUtils.isEmpty(ids)) {
+            return CollUtils.emptyList();
+        }
+
+        List<CourseCatalogue> courseCataloguesList = this.lambdaQuery()
+                .in(CourseCatalogue::getId, ids)
+                .list();
+
+        if (CollUtils.isEmpty(courseCataloguesList)) {
+            return CollUtils.emptyList();
+        }
+
+        List<Long> courseIdList = courseCataloguesList
+                .stream()
+                .map(CourseCatalogue::getCourseId)
+                .collect(Collectors.toList());
+
+        List<Course> coursesList = courseMapper.selectBatchIds(courseIdList);
+
+        Map<Long, Course> courseMap = coursesList
+                .stream()
+                .collect(Collectors.toMap(Course::getId, course -> course));
+
+        List<CourseBase> courseBaseList =  courseCataloguesList
+                .stream().map(courseCatalogue -> {
+                    CourseBase courseBase = new CourseBase();
+                    courseBase.setSectionId(courseCatalogue.getId());
+                    courseBase.setSectionName(courseCatalogue.getName());
+                    courseBase.setId(courseCatalogue.getCourseId());
+                    courseBase.setName(courseMap.get(courseCatalogue.getCourseId()).getName());
+                    return courseBase;
+                    }
+                )
+                .collect(Collectors.toList());
+
+
+
+        return courseBaseList;
+
     }
 }

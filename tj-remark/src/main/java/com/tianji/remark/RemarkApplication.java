@@ -6,11 +6,14 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
+import javax.sql.DataSource;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.sql.SQLException;
 
 import static org.bouncycastle.its.asn1.EndEntityType.app;
 
@@ -20,7 +23,7 @@ import static org.bouncycastle.its.asn1.EndEntityType.app;
 @EnableScheduling
 
 public class RemarkApplication {
-    public static void main(String[] args) throws UnknownHostException {
+    public static void main(String[] args) throws UnknownHostException, SQLException {
         SpringApplication app = new SpringApplicationBuilder(RemarkApplication.class).build(args);
         Environment env = app.run(args).getEnvironment();
         String protocol = "http";
@@ -40,5 +43,10 @@ public class RemarkApplication {
                 InetAddress.getLocalHost().getHostAddress(),
                 env.getProperty("server.port"),
                 env.getActiveProfiles());
+
+        ConfigurableApplicationContext context = SpringApplication.run(RemarkApplication.class, args);
+        DataSource dataSource = context.getBean(DataSource.class);
+        System.out.println("实际数据库连接：" + dataSource.getConnection().getMetaData().getURL());
     }
+
 }

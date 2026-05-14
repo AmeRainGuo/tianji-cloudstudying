@@ -21,7 +21,7 @@ public class QuestionDTO {
     private String name;
 
     @ApiModelProperty("题目类型，1：单选题，2：多选题，3：不定向选择题，4：判断题，5：主观题")
-    private String type;
+    private Integer type;
 
     @ApiModelProperty("难易度，1：简单，2：中等，3：困难")
     private Integer difficulty;

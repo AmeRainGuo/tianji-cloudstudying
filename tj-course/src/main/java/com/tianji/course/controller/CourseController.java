@@ -6,6 +6,7 @@ import com.tianji.common.domain.dto.PageDTO;
 import com.tianji.common.validate.annotations.ParamChecker;
 import com.tianji.course.constants.CourseStatus;
 import com.tianji.course.domain.dto.*;
+import com.tianji.course.domain.po.CourseBase;
 import com.tianji.course.domain.vo.*;
 import com.tianji.course.service.*;
 import com.tianji.course.utils.CourseSaveBaseGroup;
@@ -226,4 +227,11 @@ public class CourseController {
     public CourseAndSectionVO queryCourseAndCatalogById(@PathVariable("id") Long courseId){
         return courseService.queryCourseAndCatalogById(courseId);
     }
+
+    @ApiOperation("批量查询课程详情")
+    @GetMapping("/batch/query")
+    public List<CourseNoteVO> batchQueryCourse(@RequestParam("ids") List<Long> ids) {
+        return courseService.listCourseNoteByIds(ids);
+    }
+
 }

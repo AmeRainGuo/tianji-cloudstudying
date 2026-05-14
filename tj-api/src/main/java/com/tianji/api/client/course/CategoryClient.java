@@ -21,6 +21,11 @@ public interface CategoryClient {
     @GetMapping("/categorys/getAllOfOneLevel")
     List<CategoryBasicDTO> getAllOfOneLevel();
 
+    /**
+     * 批量获取课程分类信息
+     * @param ids 分类id列表
+     * @return 课程分类信息
+     */
     @GetMapping("/categorys/{ids}")
     @ApiOperation("批量获取课程分类信息")
     @ApiImplicitParams(
